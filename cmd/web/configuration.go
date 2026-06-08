@@ -17,6 +17,9 @@ type Configuration struct {
 	ENV_WEB_POSTGRES_DB_URL string `env:"ENV_WEB_POSTGRES_DB"`
 	ENV_WEB_LLM_GATEWAY_URL string `env:"ENV_WEB_LLM_GATEWAY_URL"`
 	ENV_WEB_BIFROST_API_KEY string `env:"ENV_WEB_BIFROST_API_KEY"`
+	ENV_WEB_LLM_MODEL       string `env:"ENV_WEB_LLM_MODEL" default:"gemini/gemini-1.5-flash"`
+
+	ENV_WEB_RELOAD_TEMPLATES bool `env:"ENV_WEB_RELOAD_TEMPLATES" default:"false"`
 }
 
 func ParseConfiguration() {

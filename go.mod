@@ -3,7 +3,8 @@ module github.com/CFF4HA/Web
 go 1.26.3
 
 require (
-	github.com/DAlba-sudo/verb v0.1.7
+	github.com/DAlba-sudo/verb v0.1.8
+	github.com/google/uuid v1.6.0
 	github.com/openai/openai-go v1.12.0
 	github.com/sethvargo/go-envconfig v1.3.0
 	gorm.io/driver/postgres v1.6.0

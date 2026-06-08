@@ -1,11 +1,36 @@
 {{ define "content" }}
-<div class="container">
+<div class="container mt-3">
   <div class="row">
     <div class="col">
 
-      <div class="d-flex flex-column">
-        <h3>Choosing Fragrance Free</h3>
-        <p>for Healthier Air</p>
+      {{/* Navbar */}}
+
+    </div>
+  </div>
+
+  <div class="row mt-3" id="primaryRow">
+    <div class="col">
+
+      <div class="d-flex flex-column my-2">
+        {{/* Hello */}}
+        <div class="d-flex flex-column">
+          <h2>Hello,</h2>
+        </div>
+
+        {{/* Search */}}
+        <div class="my-2">
+          <input type="text" class="form-control form-control-md" placeholder="Search for a product, ingredient, or tag...">
+        </div>
+
+        {{/* Buttons */}}
+        <div class="d-flex flex-row gap-2">
+          <button class="btn btn-sm"
+            hx-get="/htmx/product/create"
+            hx-target="#primaryRow"
+            hx-trigger="click"
+            hx-swap="prepend"
+          >Add Product</button>
+        </div>
       </div>
 
     </div>

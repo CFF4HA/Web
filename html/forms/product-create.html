@@ -1,0 +1,114 @@
+{{- define "content" -}}
+<div class="col-12 col-md-4" id="formContainerProductCreate">
+  <div class="mb-2">
+    <h5 class="mb-1">Product Creation</h5>
+    <p class="text-muted small mb-2">
+      Create a product manually or automatically parse from a link.
+    </p>
+  </div>
+
+  <div class="">
+    <ul class="nav nav-tabs" id="myTab" role="tablist">
+      <li class="nav-item" role="presentation">
+        <button class="nav-link active py-1 px-2 small" id="home-tab" data-bs-toggle="tab" data-bs-target="#manual-tab-pane" type="button" role="tab" aria-controls="home-tab-pane" aria-selected="true">Manual</button>
+      </li>
+      <li class="nav-item" role="presentation">
+        <button class="nav-link py-1 px-2 small" id="profile-tab" data-bs-toggle="tab" data-bs-target="#auto-tab-pane" type="button" role="tab" aria-controls="profile-tab-pane" aria-selected="false">Automated</button>
+      </li>
+    </ul>
+    <div class="tab-content" id="myTabContent">
+      <div class="tab-pane fade show active" id="manual-tab-pane" role="tabpanel" tabindex="0">
+        <form class="mt-2">
+          <div class="mb-2">
+            <label class="form-label mb-0 small fw-bold">Name</label>
+            <input type="text" class="form-control form-control-sm" placeholder="Product Name">
+          </div>
+
+          <div class="mb-2">
+            <label class="form-label mb-0 small fw-bold">Ingredient</label>
+            <div class="d-flex flex-row gap-1 align-items-center">
+              <input type="text" id="ingredientInput" class="form-control form-control-sm" placeholder="Ingredient Name">
+              <button class="btn btn-sm d-flex align-items-center justify-content-center px-2" style="height: 31px;" id="addIngredientBtn" type="button"><i class="bi bi-plus-square-fill"></i></button>
+            </div>
+            <div class="form-text mt-1" style="font-size: 0.75rem;">Press 'Enter' or click '+' to add.</div>
+          </div>
+
+          <div class="mb-3">
+            <label class="form-label mb-1 small fw-bold">Ingredient List</label>
+            <input type="hidden" id="ingredientsHidden" name="ingredients" value="">
+
+            <div id="listIngredientsPill" class="d-flex flex-row gap-1 align-items-center flex-wrap border rounded p-2 bg-light" style="min-height: 42px;">
+              <span class="text-muted fst-italic" style="font-size: 0.75rem; margin:0;">None added yet</span>
+            </div>
+          </div>
+        </form>
+      </div>
+      <div class="tab-pane fade" id="auto-tab-pane" role="tabpanel" tabindex="0">
+        <form class="mt-2">
+          <div class="mb-2">
+            <label class="form-label mb-0 small fw-bold">Link</label>
+            <input type="text" class="form-control form-control-sm" placeholder="https://example.com/product/123" disabled>
+          </div> 
+        </form>
+      </div>
+    </div>
+
+    <div class="d-flex flex-row justify-content-end mb-2 mt-2">
+      <button class="btn btn-sm py-1 px-3" onclick="deleteElement(document.getElementById('formContainerProductCreate'));" type="button">Cancel</button>
+      <button class="btn btn-sm ms-2 py-1 px-3" type="submit">Add</button>
+    </div>
+  </div>
+
+  
+</div>
+
+<script>
+  function deleteElement(element) {
+    element.remove();
+  }
+
+  (function() {
+    const ingredientInput = document.getElementById('ingredientInput');
+    const addIngredientBtn = document.getElementById('addIngredientBtn');
+    const ingredientsHidden = document.getElementById('ingredientsHidden');
+    const listIngredientsPill = document.getElementById('listIngredientsPill');
+
+    function addIngredient(e) {
+      if (e) e.preventDefault();
+      
+      const val = ingredientInput.value.trim();
+      if (!val) return;
+
+      let currentIngredients = ingredientsHidden.value;
+      if (currentIngredients.length > 0) {
+        ingredientsHidden.value = currentIngredients + ';' + val;
+      } else {
+        ingredientsHidden.value = val;
+      }
+
+      const emptyMsg = listIngredientsPill.querySelector('span.text-muted');
+      if (emptyMsg && emptyMsg.textContent === "None added yet") {
+        emptyMsg.remove();
+      }
+
+      const pill = document.createElement('span');
+      pill.className = 'badge bg-secondary rounded-pill py-1 px-2 fw-normal';
+      pill.textContent = val;
+      
+      listIngredientsPill.appendChild(pill);
+
+      ingredientInput.value = '';
+    }
+
+    addIngredientBtn.addEventListener('click', addIngredient);
+
+    ingredientInput.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter') {
+        e.preventDefault();
+        addIngredient();
+      }
+    });
+  })();
+</script>
+{{- end }}
+{{- template "content" . }}
